@@ -1,13 +1,18 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from './Icon';
-import HomePage from '../pages/HomePage';
-import InboxPage from '../pages/InboxPage';
-import CreatePage from '../pages/CreatePage';
-import ArtistsPage from '../pages/ArtistsPage';
-import ProfilePage from '../pages/ProfilePage';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+import WebViewPage from '../pages/WebViewPage';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+
+const HomePage = () => <WebViewPage route={{ params: { url: 'https://home.url' } }} />;
+const InboxPage = () => <WebViewPage route={{ params: { url: 'https://inbox.url' } }} />;
+const CreatePage = () => <WebViewPage route={{ params: { url: 'https://create.url' } }} />;
+const ArtistsPage = () => <WebViewPage route={{ params: { url: 'https://artists.url' } }} />;
+const ProfilePage = () => <WebViewPage route={{ params: { url: 'https://profile.url' } }} />;
 
 const BottomTabNavigator = () => {
   return (
@@ -34,7 +39,7 @@ const BottomTabNavigator = () => {
               break;
           }
 
-          return <Icon name={iconName} size={size} color={color} />;
+          return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'tomato',
         tabBarInactiveTintColor: 'gray',
@@ -64,4 +69,15 @@ const BottomTabNavigator = () => {
   );
 };
 
-export default BottomTabNavigator;
+const AppNavigator = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Main" component={BottomTabNavigator} options={{ headerShown: false }} />
+        <Stack.Screen name="WebViewPage" component={WebViewPage} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export default AppNavigator;

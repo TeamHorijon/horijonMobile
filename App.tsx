@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import StartingPage from '@pages/StartingPage';
-import BottomTabNavigator from '@components/BottomTabNavigator';
+import AppNavigator from '@components/BottomTabNavigator';
 
 const Stack = createStackNavigator();
 
@@ -28,7 +28,7 @@ const App = () => {
           />
         </Stack.Navigator>
       ) : (
-        <BottomTabNavigator />
+        <AppNavigator />
       )}
     </NavigationContainer>
   );
