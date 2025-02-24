@@ -1,9 +1,8 @@
-// App.tsx
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import StartingPage from '@pages/StartingPage';
-import AppNavigator from '@components/BottomTabNavigator';
+import StartingPage from './src/pages/StartingPage';
+import AppNavigator from './src/components/BottomTabNavigator';
 
 const Stack = createStackNavigator();
 

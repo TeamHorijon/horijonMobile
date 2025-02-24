@@ -1,19 +1,19 @@
-// BottomTabNavigator.tsx
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import HomePage from '@pages/HomePage';
-import InboxPage from '@pages/InboxPage';
-import CreatePage from '@pages/CreatePage';
-import ArtistsPage from '@pages/ArtistsPage';
-import ProfilePage from '@pages/ProfilePage';
-import WebViewPage from '@pages/WebViewPage';
-import { ROUTES } from '@components/routes';
+import { URLs } from '../config';
+import WebViewPage from '../pages/WebViewPage';
 
-// Create navigator instances
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+
+// Wrapper components for each tab
+const HomePage = () => <WebViewPage route={{ params: { url: URLs.HOME } }} />;
+const InboxPage = () => <WebViewPage route={{ params: { url: URLs.INBOX } }} />;
+const CreatePage = () => <WebViewPage route={{ params: { url: URLs.CREATE } }} />;
+const ArtistsPage = () => <WebViewPage route={{ params: { url: URLs.ARTISTS } }} />;
+const ProfilePage = () => <WebViewPage route={{ params: { url: URLs.PROFILE } }} />;
 
 const BottomTabNavigator = () => {
   return (
@@ -23,19 +23,19 @@ const BottomTabNavigator = () => {
           let iconName: string = 'ios-help-circle'; // Default fallback icon
 
           switch (route.name) {
-            case ROUTES.HOME:
+            case 'Home':
               iconName = focused ? 'ios-home' : 'ios-home-outline';
               break;
-            case ROUTES.INBOX:
+            case 'Inbox':
               iconName = focused ? 'ios-mail' : 'ios-mail-outline';
               break;
-            case ROUTES.CREATE:
+            case 'Create':
               iconName = focused ? 'ios-create' : 'ios-create-outline';
               break;
-            case ROUTES.ARTISTS:
+            case 'Artists':
               iconName = focused ? 'ios-people' : 'ios-people-outline';
               break;
-            case ROUTES.PROFILE:
+            case 'Profile':
               iconName = focused ? 'ios-person' : 'ios-person-outline';
               break;
             default:
@@ -63,17 +63,15 @@ const BottomTabNavigator = () => {
         tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name={ROUTES.HOME} component={HomePage} />
-      <Tab.Screen name={ROUTES.INBOX} component={InboxPage} />
-      <Tab.Screen name={ROUTES.CREATE} component={CreatePage} />
-      <Tab.Screen name={ROUTES.ARTISTS} component={ArtistsPage} />
-      <Tab.Screen name={ROUTES.PROFILE} component={ProfilePage} />
+      <Tab.Screen name="Home" component={HomePage} />
+      <Tab.Screen name="Inbox" component={InboxPage} />
+      <Tab.Screen name="Create" component={CreatePage} />
+      <Tab.Screen name="Artists" component={ArtistsPage} />
+      <Tab.Screen name="Profile" component={ProfilePage} />
     </Tab.Navigator>
   );
 };
 
-// Main app navigator that includes both the tab navigator and any screens
-// that should be accessible outside the tab structure
 const AppNavigator = () => {
   return (
     <Stack.Navigator>
@@ -83,7 +81,7 @@ const AppNavigator = () => {
         options={{ headerShown: false }} 
       />
       <Stack.Screen 
-        name={ROUTES.WEBVIEW} 
+        name="WebViewPage" 
         component={WebViewPage} 
         options={{ headerShown: false }} 
       />
