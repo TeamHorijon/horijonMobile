@@ -1,45 +1,21 @@
+// BottomTabNavigator.tsx
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import WebViewPage from '../pages/WebViewPage';
-import { ParamListBase, RouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import HomePage from '@pages/HomePage';
+import InboxPage from '@pages/InboxPage';
+import CreatePage from '@pages/CreatePage';
+import ArtistsPage from '@pages/ArtistsPage';
+import ProfilePage from '@pages/ProfilePage';
+import WebViewPage from '@pages/WebViewPage';
+import { ROUTES } from '@components/routes';
 
-// Define navigation types
-type RootStackParamList = {
-  Main: undefined;
-  WebViewPage: { url: string };
-};
+// Create navigator instances
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-type TabParamList = {
-  Home: undefined;
-  Inbox: undefined;
-  Create: undefined;
-  Artists: undefined;
-  Profile: undefined;
-};
-
-// Define WebViewPage props type
-type WebViewPageProps = {
-  route: {
-    params: {
-      url: string;
-    };
-  };
-};
-
-const Tab = createBottomTabNavigator<TabParamList>();
-const Stack = createStackNavigator<RootStackParamList>();
-
-// Create wrapper components with proper navigation props
-const HomePage: React.FC = () => <WebViewPage route={{ params: { url: 'https://horijon.org/arena' } }} />;
-const InboxPage: React.FC = () => <WebViewPage route={{ params: { url: 'https://inbox.url' } }} />;
-const CreatePage: React.FC = () => <WebViewPage route={{ params: { url: 'https://create.url' } }} />;
-const ArtistsPage: React.FC = () => <WebViewPage route={{ params: { url: 'https://horijon.org/biography' } }} />;
-const ProfilePage: React.FC = () => <WebViewPage route={{ params: { url: 'https://profile.url' } }} />;
-
-const BottomTabNavigator: React.FC = () => {
+const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -47,26 +23,25 @@ const BottomTabNavigator: React.FC = () => {
           let iconName: string = 'ios-help-circle'; // Default fallback icon
 
           switch (route.name) {
-            case 'Home':
+            case ROUTES.HOME:
               iconName = focused ? 'ios-home' : 'ios-home-outline';
               break;
-            case 'Inbox':
+            case ROUTES.INBOX:
               iconName = focused ? 'ios-mail' : 'ios-mail-outline';
               break;
-            case 'Create':
+            case ROUTES.CREATE:
               iconName = focused ? 'ios-create' : 'ios-create-outline';
               break;
-            case 'Artists':
+            case ROUTES.ARTISTS:
               iconName = focused ? 'ios-people' : 'ios-people-outline';
               break;
-            case 'Profile':
+            case ROUTES.PROFILE:
               iconName = focused ? 'ios-person' : 'ios-person-outline';
               break;
             default:
-              iconName = 'ios-help-circle'; // Ensure there's always a default
+              iconName = 'ios-help-circle';
           }
 
-          // Now iconName is guaranteed to be a string
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: 'tomato',
@@ -88,22 +63,28 @@ const BottomTabNavigator: React.FC = () => {
         tabBarHideOnKeyboard: true,
       })}
     >
-      <Tab.Screen name="Home" component={HomePage} />
-      <Tab.Screen name="Inbox" component={InboxPage} />
-      <Tab.Screen name="Create" component={CreatePage} />
-      <Tab.Screen name="Artists" component={ArtistsPage} />
-      <Tab.Screen name="Profile" component={ProfilePage} />
+      <Tab.Screen name={ROUTES.HOME} component={HomePage} />
+      <Tab.Screen name={ROUTES.INBOX} component={InboxPage} />
+      <Tab.Screen name={ROUTES.CREATE} component={CreatePage} />
+      <Tab.Screen name={ROUTES.ARTISTS} component={ArtistsPage} />
+      <Tab.Screen name={ROUTES.PROFILE} component={ProfilePage} />
     </Tab.Navigator>
   );
 };
 
-const AppNavigator: React.FC = () => {
+// Main app navigator that includes both the tab navigator and any screens
+// that should be accessible outside the tab structure
+const AppNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Main" component={BottomTabNavigator} options={{ headerShown: false }} />
       <Stack.Screen 
-        name="WebViewPage" 
-        component={WebViewPage as React.ComponentType<any>} 
+        name="Main" 
+        component={BottomTabNavigator} 
+        options={{ headerShown: false }} 
+      />
+      <Stack.Screen 
+        name={ROUTES.WEBVIEW} 
+        component={WebViewPage} 
         options={{ headerShown: false }} 
       />
     </Stack.Navigator>

@@ -1,3 +1,4 @@
+// WebViewPage.tsx
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
