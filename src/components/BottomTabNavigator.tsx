@@ -1,6 +1,5 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import WebViewPage from '../pages/WebViewPage';
@@ -8,10 +7,10 @@ import WebViewPage from '../pages/WebViewPage';
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const HomePage = () => <WebViewPage route={{ params: { url: 'https://home.url' } }} />;
+const HomePage = () => <WebViewPage route={{ params: { url: 'https://horijon.org/arena' } }} />;
 const InboxPage = () => <WebViewPage route={{ params: { url: 'https://inbox.url' } }} />;
 const CreatePage = () => <WebViewPage route={{ params: { url: 'https://create.url' } }} />;
-const ArtistsPage = () => <WebViewPage route={{ params: { url: 'https://artists.url' } }} />;
+const ArtistsPage = () => <WebViewPage route={{ params: { url: 'https://horijon.org/biography' } }} />;
 const ProfilePage = () => <WebViewPage route={{ params: { url: 'https://profile.url' } }} />;
 
 const BottomTabNavigator = () => {
@@ -71,12 +70,10 @@ const BottomTabNavigator = () => {
 
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Main" component={BottomTabNavigator} options={{ headerShown: false }} />
-        <Stack.Screen name="WebViewPage" component={WebViewPage} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Stack.Navigator>
+      <Stack.Screen name="Main" component={BottomTabNavigator} options={{ headerShown: false }} />
+      <Stack.Screen name="WebViewPage" component={WebViewPage} options={{ headerShown: false }} />
+    </Stack.Navigator>
   );
 };
 
