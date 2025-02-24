@@ -1,17 +1,37 @@
-import 'react-native-gesture-handler';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import WebViewScreen from './screens/WebViewScreen';
+import StartingPage from './pages/StartingPage';
+import BottomTabNavigator from './components/BottomTabNavigator';
 
 const Stack = createStackNavigator();
 
-export default function App() {
+const App = () => {
+  const [isFirstLaunch, setIsFirstLaunch] = useState(true);
+
+  useEffect(() => {
+    // Logic to check if it's the first launch or the app is restarted
+    // For simplicity, we are just using a state variable here
+    setTimeout(() => {
+      setIsFirstLaunch(false);
+    }, 3000); // Display the starting page for 3 seconds
+  }, []);
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="WebView">
-        <Stack.Screen name="WebView" component={WebViewScreen} />
-      </Stack.Navigator>
+      {isFirstLaunch ? (
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="StartingPage" 
+            component={StartingPage} 
+            options={{ headerShown: false }} 
+          />
+        </Stack.Navigator>
+      ) : (
+        <BottomTabNavigator />
+      )}
     </NavigationContainer>
   );
-}
+};
+
+export default App;
